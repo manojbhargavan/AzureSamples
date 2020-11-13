@@ -8,7 +8,9 @@ namespace EmployeeRepo.Data
 {
     public interface IEmployeeRepository
     {
-        public List<Employees> GetEmployees();
-        public Employees GetEmployee(long Id);
+        public List<Employee> GetEmployees();
+        public Employee GetEmployee(long Id);
+        public bool DeleteEmployee(long Id);
+        public bool UpdateEmployee(Employee emp);
     }
 }

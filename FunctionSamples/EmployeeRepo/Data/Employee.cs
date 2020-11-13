@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeRepo.Data
 {
-    public class Employees
+    public class Employee
     {
         public long Id { get; set; }
         public string Name { get; set; }
