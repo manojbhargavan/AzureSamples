@@ -8,7 +8,7 @@ namespace EmployeeRepo.Data
 {
     public interface IEmployeeRepository
     {
-        public List<Employee> GetEmployeesAsync();
-        public Employee GetEmployeeAsync(long Id);
+        public List<Employees> GetEmployees();
+        public Employees GetEmployee(long Id);
     }
 }

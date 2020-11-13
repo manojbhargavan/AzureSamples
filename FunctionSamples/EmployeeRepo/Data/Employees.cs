@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeRepo.Data
 {
-    public class Employee
+    public class Employees
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -18,7 +18,7 @@ namespace EmployeeRepo.Data
         public string Location { get; set; }
         public double Lng { get; set; }
         public double Lat { get; set; }
-        public DateTimeOffset? Dob { get; set; }
+        public string Dob { get; set; }
         public long Gender { get; set; }
         public long UserType { get; set; }
         public long UserStatus { get; set; }
@@ -28,8 +28,8 @@ namespace EmployeeRepo.Data
         public bool Sendmenotifications { get; set; }
         public bool SendTextmessages { get; set; }
         public bool Enabletagging { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
+        public string CreatedAt { get; set; }
+        public string UpdatedAt { get; set; }
         public double Livelng { get; set; }
         public double Livelat { get; set; }
         public string LiveLocation { get; set; }

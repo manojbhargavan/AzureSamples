@@ -7,29 +7,41 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using EmployeeRepo.Data;
+using EmployeeRepo.Data.FileSystem;
 
 namespace EmployeeRepo
 {
     public static class Employee
     {
         [FunctionName("employeeGetAll")]
-        public static async Task<IActionResult> EmployeeGetAll(
+        public static IActionResult EmployeeGetAll(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "employee")] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("Getting Employee Data from Repo");
 
-            string name = req.Query["name"];
+            IEmployeeRepository empData = new EmployeeRepository();
+            var data = empData.GetEmployees();
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            return new JsonResult(data);
+        }
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+        [FunctionName("employeeGet")]
+        public static IActionResult EmployeeGet(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "employee/{id}")] HttpRequest req,
+            long id,
+            ILogger log)
+        {
+            log.LogInformation("Getting Employee Data from Repo");
 
-            return new OkObjectResult(responseMessage);
+            IEmployeeRepository empData = new EmployeeRepository();
+            var data = empData.GetEmployee(id);
+
+            if (data == null)
+                return new NotFoundObjectResult($"Not Found: {id}");
+
+            return new JsonResult(data);
         }
     }
 }
