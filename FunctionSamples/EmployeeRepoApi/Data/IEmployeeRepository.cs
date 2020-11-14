@@ -12,5 +12,7 @@ namespace EmployeeRepo.Data
         public Employee GetEmployee(long Id);
         public bool DeleteEmployee(long Id);
         public bool UpdateEmployee(Employee emp);
+        public bool InsertEmployee(Employee emp);
+        public bool RestoreEmployeeDataset();
     }
 }

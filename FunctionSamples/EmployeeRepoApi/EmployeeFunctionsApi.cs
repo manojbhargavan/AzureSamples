@@ -13,9 +13,9 @@ using System.Net.Http;
 
 namespace EmployeeRepo
 {
-    public static class Employee
+    public static class EmployeeFunctionsApi
     {
-        [FunctionName("getAll")]
+        [FunctionName("GetAllEmployee")]
         public static IActionResult EmployeeGetAll(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "employee")] HttpRequest req,
             ILogger log)
@@ -28,7 +28,7 @@ namespace EmployeeRepo
             return new JsonResult(data);
         }
 
-        [FunctionName("get")]
+        [FunctionName("GetEmployee")]
         public static IActionResult EmployeeGet(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "employee/{id}")] HttpRequest req,
             long id,
@@ -45,7 +45,7 @@ namespace EmployeeRepo
             return new JsonResult(data);
         }
 
-        [FunctionName("delete")]
+        [FunctionName("DeleteEmployee")]
         public static IActionResult EmployeeDelete(
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "employee/{id}")] HttpRequest req,
             long id,
@@ -67,16 +67,16 @@ namespace EmployeeRepo
                 return new BadRequestResult();
         }
 
-        [FunctionName("update")]
+        [FunctionName("UpdateEmployee")]
         public static async Task<IActionResult> EmployeeUpdate(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "employee")] HttpRequestMessage req,            
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "employee")] HttpRequestMessage req,
             ILogger log)
         {
             try
             {
                 string reqBody = await req.Content.ReadAsStringAsync();
                 Data.Employee employee = JsonConvert.DeserializeObject<Data.Employee>(reqBody);
-                log.LogInformation("Updating Employee Data from Repo");
+                log.LogInformation("Updating Employee Data to Repo");
 
                 IEmployeeRepository empData = new EmployeeRepository();
                 if (employee != null)
@@ -93,7 +93,63 @@ namespace EmployeeRepo
                     return new NotFoundObjectResult($"Not Found/Unable to update");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
+        }
+
+        [FunctionName("InsertEmployee")]
+        public static async Task<IActionResult> EmployeeInsert(
+            [HttpTrigger(AuthorizationLevel.Function, "put", Route = "employee")] HttpRequestMessage req,
+            ILogger log)
+        {
+            try
+            {
+                string reqBody = await req.Content.ReadAsStringAsync();
+                Data.Employee employee = JsonConvert.DeserializeObject<Data.Employee>(reqBody);
+                log.LogInformation("Inserting Employee Data to Repo");
+
+                IEmployeeRepository empData = new EmployeeRepository();
+                if (employee != null)
+                {
+                    var result = empData.InsertEmployee(employee);
+
+                    if (result)
+                        return new NoContentResult();
+                    else
+                        return new BadRequestResult();
+                }
+                else
+                {
+                    return new BadRequestObjectResult($"Unable to create employee, check if the record with same id already exists. Update if it does.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
+        }
+
+        [FunctionName("RestoreEmployeeDataset")]
+        public static IActionResult EmployeeDatasetRestore(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "employee/restore")] HttpRequestMessage req,
+            ILogger log)
+        {
+            try
+            {
+                log.LogInformation("Retoring Employee Data from Repo");
+
+                IEmployeeRepository empData = new EmployeeRepository();
+
+                var result = empData.RestoreEmployeeDataset();
+
+                if (result)
+                    return new NoContentResult();
+                else
+                    return new BadRequestResult();
+            }
+            catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex);
             }
