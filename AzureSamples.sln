@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FunctionSamples", "Function
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeRepoApi", "FunctionSamples\EmployeeRepoApi\EmployeeRepoApi.csproj", "{E6C3FE57-9091-443A-B1E3-5DAB38B4A093}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurableFunctionsDemo", "DurableFunctionsDemo\DurableFunctionsDemo.csproj", "{72A2F3D7-F301-47D9-BAB4-5103ECEDF9EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DurableFunctionsDemo", "FunctionSamples\DurableFunctionsDemo\DurableFunctionsDemo.csproj", "{72A2F3D7-F301-47D9-BAB4-5103ECEDF9EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +49,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E6C3FE57-9091-443A-B1E3-5DAB38B4A093} = {D0061709-FE79-4B66-B4B7-3F2B2C07A470}
+		{72A2F3D7-F301-47D9-BAB4-5103ECEDF9EA} = {D0061709-FE79-4B66-B4B7-3F2B2C07A470}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0D7E8DB-17B2-4820-B993-3419269699BC}
