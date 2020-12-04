@@ -10,8 +10,8 @@ namespace EmployeeRepo.Data.FileSystem
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private string _employeeFileName = @".\Data\FileSystem\EmployeeData.json";
-        private string _originalEmployeeFileName = @".\Data\FileSystem\EmployeeData_Original.json";
+        private string _employeeFileName = @"./Data/FileSystem/EmployeeData.json";
+        private string _originalEmployeeFileName = @"./Data/FileSystem/EmployeeData_Original.json";
         private List<Employee> Employees { get; set; }
 
         public EmployeeRepository()
