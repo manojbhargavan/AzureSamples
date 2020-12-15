@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ namespace serverSideBasics
                                     .AddJsonFile("appsettings.json")
                                     .Build();
 
-                                    using (DocumentClient cosmosDocumentClient = new DocumentClient(new Uri(configuration["CosmosHost"]), configuration["CosmosKey"]))
+            using (DocumentClient cosmosDocumentClient = new DocumentClient(new Uri(configuration["CosmosHost"]), configuration["CosmosKey"]))
             {
                 var emp1 = new employee()
                 {
@@ -39,7 +40,7 @@ namespace serverSideBasics
                     firstName = "ErrorKing",
                     lastName = "test",
                     department = "IT",
-                    location = "HyderabadKing",
+                    location = "HyderabadErrorMock",
                     id = Guid.NewGuid().ToString()
                 };
 
@@ -47,7 +48,7 @@ namespace serverSideBasics
                                         (UriFactory.CreateStoredProcedureUri(configuration["DatabaseId"], "employee", "createEmployees"),
                                         new Microsoft.Azure.Documents.Client.RequestOptions
                                         {
-                                            PartitionKey = new Microsoft.Azure.Documents.PartitionKey("Hyderabad")
+                                            PartitionKey = new Microsoft.Azure.Documents.PartitionKey("Hyderabad"),
                                         }, JsonConvert.SerializeObject(new object[] { emp1, emp2, emp3 })).Result;
                 System.Console.WriteLine(storedProcResult.Response);
             }
