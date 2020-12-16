@@ -1,4 +1,4 @@
-namespace serverSideBasics
+namespace ServerSideBasics
 {
     public class employee
     {

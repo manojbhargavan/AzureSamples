@@ -21,11 +21,15 @@ function createEmployees(arr) {
     }
 
     function createEmployee(employee, checkAndCreateNext) {
+        //Add a new property
+        employee.fullName = `${employee.firstName} ${employee.lastName}`;
+
+        var options = { disableAutomaticIdGeneration: false, preTriggerInclude: ['setFullName'] };
         //Try to create the document
         var docCreated = collection.createDocument(
             collectionLink,
             employee,
-            { disableAutomaticIdGeneration: true },
+            options,
             checkAndCreateNext
         );
     }

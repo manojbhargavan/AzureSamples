@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using serverSideBasics.SP;
+using serverSideBasics.Transaction;
+using serverSideBasics.Trigger;
 
-namespace serverSideBasics
+namespace ServerSideBasics
 {
     class Program
     {
@@ -15,43 +19,24 @@ namespace serverSideBasics
                                     .AddJsonFile("appsettings.json")
                                     .Build();
 
-            using (DocumentClient cosmosDocumentClient = new DocumentClient(new Uri(configuration["CosmosHost"]), configuration["CosmosKey"]))
-            {
-                var emp1 = new employee()
-                {
-                    firstName = "Manoj",
-                    lastName = "test",
-                    department = "IT",
-                    location = "Hyderabad",
-                    id = Guid.NewGuid().ToString()
-                };
+            //Stored Procedure Demo
+            ShowMessage("Stored Procedure Demo");
+            SpDemo.StoredProcedureToInsertDocuments(configuration);
 
-                var emp2 = new employee()
-                {
-                    firstName = "Nandan",
-                    lastName = "test",
-                    department = "IT",
-                    location = "Hyderabad",
-                    id = Guid.NewGuid().ToString()
-                };
+            //Trigger
+            ShowMessage("Trigger Demo");
+            PreTriggerDemo.TriggerWhileInsertDocuments(configuration);
 
-                var emp3 = new employee()
-                {
-                    firstName = "ErrorKing",
-                    lastName = "test",
-                    department = "IT",
-                    location = "HyderabadErrorMock",
-                    id = Guid.NewGuid().ToString()
-                };
+            //Trigger
+            ShowMessage("Transaction Demo");
+            TransactionsDemo.TransactionUsingSdk(configuration);
+        }
 
-                var storedProcResult = cosmosDocumentClient.ExecuteStoredProcedureAsync<object>
-                                        (UriFactory.CreateStoredProcedureUri(configuration["DatabaseId"], "employee", "createEmployees"),
-                                        new Microsoft.Azure.Documents.Client.RequestOptions
-                                        {
-                                            PartitionKey = new Microsoft.Azure.Documents.PartitionKey("Hyderabad"),
-                                        }, JsonConvert.SerializeObject(new object[] { emp1, emp2, emp3 })).Result;
-                System.Console.WriteLine(storedProcResult.Response);
-            }
+        private static void ShowMessage(string message)
+        {
+            System.Console.WriteLine("Press Enter to continue...");
+            System.Console.ReadLine();
+            System.Console.WriteLine(message);
         }
     }
 }
