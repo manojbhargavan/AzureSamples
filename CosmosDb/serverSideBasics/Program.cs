@@ -23,11 +23,11 @@ namespace ServerSideBasics
             ShowMessage("Stored Procedure Demo");
             SpDemo.StoredProcedureToInsertDocuments(configuration);
 
-            //Trigger
+            //Pre Trigger
             ShowMessage("Trigger Demo");
             PreTriggerDemo.TriggerWhileInsertDocuments(configuration);
 
-            //Trigger
+            //Transaction using the SDK
             ShowMessage("Transaction Demo");
             TransactionsDemo.TransactionUsingSdk(configuration);
         }

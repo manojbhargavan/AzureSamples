@@ -39,12 +39,12 @@ function createEmployees(arr) {
         if (error) {
             docsInErrorData.push({
                 document: employeesDataArr[curIndex],
-                status: "Error: " + JSON.stringify(error),
+                status: "Error: " + JSON.stringify(error)
             });
         } else {
             docsCreatedData.push({
                 document: employeesDataArr[curIndex],
-                status: "Document Created: " + JSON.stringify(emp),
+                status: "Document Created: " + JSON.stringify(emp)
             });
         }
 

@@ -54,21 +54,21 @@ namespace serverSideBasics.Transaction
             }
         }
 
-        private static void RenderResult(TransactionalBatchResponse resultError, int resultCount)
+        private static void RenderResult(TransactionalBatchResponse results, int resultCount)
         {
             Console.WriteLine();
             Console.WriteLine("Result View------------------------------------------");
-            Console.WriteLine($"Overall Status: {resultError.IsSuccessStatusCode}");
-            if (!resultError.IsSuccessStatusCode)
-                Console.WriteLine($"Error Message: {resultError.ErrorMessage}");
-            Console.WriteLine($"Status Code: {resultError.StatusCode}");
-            Console.WriteLine($"Activity Id: {resultError.ActivityId}");
+            Console.WriteLine($"Overall Status: {results.IsSuccessStatusCode}");
+            if (!results.IsSuccessStatusCode)
+                Console.WriteLine($"Error Message: {results.ErrorMessage}");
+            Console.WriteLine($"Status Code: {results.StatusCode}");
+            Console.WriteLine($"Activity Id: {results.ActivityId}");
 
 
             for (int i = 0; i < resultCount; i++)
             {
                 Console.WriteLine($"\tSub Task #{i + 1}------------------------------------------");
-                var operationResult = resultError.GetOperationResultAtIndex<dynamic>(i);
+                var operationResult = results.GetOperationResultAtIndex<dynamic>(i);
                 Console.WriteLine($"\t Status Code: {operationResult.StatusCode}");
                 Console.WriteLine($"\t ETag: {operationResult.ETag}");
                 Console.WriteLine($"\t Resource: {operationResult.Resource}");
