@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "src_dotnet": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7286",
+      "launchBrowser": false
+    }
+  }
+}
