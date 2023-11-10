@@ -14,7 +14,7 @@ namespace EmployeeDataProcessor
     public class EmployeeCsvProcessor
     {
         [FunctionName("EmployeeCsvProcessor")]
-        public void Run([BlobTrigger("employeedataraw/{name}", Connection = "")] Stream myBlob, string name, ILogger log, Binder binder)
+        public void Run([BlobTrigger("employeerawdata/{name}", Connection = "EmployeeStorage")] Stream myBlob, string name, ILogger log, Microsoft.Azure.WebJobs.Binder binder)
         {
             log.LogInformation($"File Received --> Name:{name}, Size: {myBlob.Length} Bytes");
 
@@ -30,7 +30,14 @@ namespace EmployeeDataProcessor
                     log.LogInformation(data);
                     string fileName = $"{outputContainer}/{e.EmployeeID}.json";
 
-                    using (var writer = binder.Bind<TextWriter>(new BlobAttribute(fileName)))
+                    var attributes = new Attribute[]
+                    {
+                        new BlobAttribute(fileName),
+                        new StorageAccountAttribute("EmployeeStorage")
+                    };
+
+
+                    using (var writer = binder.BindAsync<TextWriter>(attributes).Result)
                     {
                         writer.Write(data);
                     }
