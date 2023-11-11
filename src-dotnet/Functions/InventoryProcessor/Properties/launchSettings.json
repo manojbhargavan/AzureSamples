@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "OrderDataProcessor": {
+    "InventoryProcessor": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7071",
+      "commandLineArgs": "--port 7066",
       "launchBrowser": false
     }
   }
