@@ -23,5 +23,7 @@ namespace OrderProcessor
         {
             return JsonConvert.SerializeObject(this);
         }
+
+        public string OrderNumber { get; set; }
     }
 }
