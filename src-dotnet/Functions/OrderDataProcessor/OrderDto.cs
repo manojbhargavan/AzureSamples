@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace OrderDataProcessor
 {
-    public class Order
+    public class OrderDto
     {
         public string OrderID { get; set; }
         public string CustomerName { get; set; }
@@ -16,6 +16,5 @@ namespace OrderDataProcessor
         public double Price { get; set; }
         public string OrderDate { get; set; }
         public string ShippingAddress { get; set; }
-        public double OrderTotal { get; set; }
     }
 }
